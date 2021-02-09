@@ -1,0 +1,1174 @@
+[
+    {
+        "id": "f2b5b222.75f0f",
+        "type": "tab",
+        "label": "oBIX_N4_getPost_dataTypes",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f2fa2c4f.4cdb4",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 140,
+        "wires": [
+            [
+                "c6a2919c.77e368"
+            ]
+        ]
+    },
+    {
+        "id": "ecead347.7069f",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 140,
+        "wires": [
+            [
+                "79156e48.042778"
+            ]
+        ]
+    },
+    {
+        "id": "c6a2919c.77e368",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "get Numeric",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/NumericWritable\";\n\noperation = \"\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"GET\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 140,
+        "wires": [
+            [
+                "ecead347.7069f"
+            ]
+        ]
+    },
+    {
+        "id": "79156e48.042778",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 140,
+        "wires": [
+            [
+                "594faeba.614398"
+            ]
+        ]
+    },
+    {
+        "id": "ca9af6bc.a21f5",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 40,
+        "wires": [
+            [
+                "b5fd3bac.e419b8"
+            ]
+        ]
+    },
+    {
+        "id": "b5fd3bac.e419b8",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "initialize variables",
+        "func": "//assign credentials and ip info for niagara station\n\nusername = \"obixUser\";\npassword = \"obixPASSWORD1234\";\nipAddress = \"192.168.1.160\";\nhttpsPort = 52345;\n\n//create a base64 digest\nauthHash = Buffer.from(username+\":\"+password).toString(\"base64\");\n\n//set flow variables for use in other nodes on this flow\nflow.set(\"authHash\", authHash);\nflow.set(\"IP\", ipAddress+\":\"+httpsPort);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 280,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "594faeba.614398",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1810575d.c5d4b9",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "add6602f.ddf6c8"
+            ]
+        ]
+    },
+    {
+        "id": "13972bb4.3b0984",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "730533c2.8f7724"
+            ]
+        ]
+    },
+    {
+        "id": "add6602f.ddf6c8",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "get Boolean",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/BooleanWritable\";\n\noperation = \"\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"GET\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 180,
+        "wires": [
+            [
+                "13972bb4.3b0984"
+            ]
+        ]
+    },
+    {
+        "id": "730533c2.8f7724",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 180,
+        "wires": [
+            [
+                "6c88de96.0ca7f"
+            ]
+        ]
+    },
+    {
+        "id": "6c88de96.0ca7f",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "99ed1938.eef6d8",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "709ebff6.7047d8"
+            ]
+        ]
+    },
+    {
+        "id": "5d7c6240.8df73c",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 220,
+        "wires": [
+            [
+                "f480ca9c.df5a6"
+            ]
+        ]
+    },
+    {
+        "id": "709ebff6.7047d8",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "get Enum",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/EnumWritable\";\n\noperation = \"\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"GET\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 250,
+        "y": 220,
+        "wires": [
+            [
+                "5d7c6240.8df73c"
+            ]
+        ]
+    },
+    {
+        "id": "f480ca9c.df5a6",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 220,
+        "wires": [
+            [
+                "6b07c857.bdde48"
+            ]
+        ]
+    },
+    {
+        "id": "6b07c857.bdde48",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "45395915.f9b97",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "103c18f7.eb1b87"
+            ]
+        ]
+    },
+    {
+        "id": "e0ea39ab.6bb8d8",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 260,
+        "wires": [
+            [
+                "38e79ef8.9d64ca"
+            ]
+        ]
+    },
+    {
+        "id": "103c18f7.eb1b87",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "get String",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/StringWritable\";\n\noperation = \"\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"GET\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 250,
+        "y": 260,
+        "wires": [
+            [
+                "e0ea39ab.6bb8d8"
+            ]
+        ]
+    },
+    {
+        "id": "38e79ef8.9d64ca",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "ad322b7f.111aa8"
+            ]
+        ]
+    },
+    {
+        "id": "ad322b7f.111aa8",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9f706766.896a5",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 360,
+        "wires": [
+            [
+                "b422c120.bb1cb"
+            ]
+        ]
+    },
+    {
+        "id": "27224bf7.c1e7bc",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 360,
+        "wires": [
+            [
+                "860d9d64.fb388"
+            ]
+        ]
+    },
+    {
+        "id": "b422c120.bb1cb",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "get Time",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/CurrentTime\";\n\noperation = \"\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"GET\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "27224bf7.c1e7bc"
+            ]
+        ]
+    },
+    {
+        "id": "860d9d64.fb388",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 360,
+        "wires": [
+            [
+                "628d45bd.77a2ec"
+            ]
+        ]
+    },
+    {
+        "id": "628d45bd.77a2ec",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3b2aeff0.19b388",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 300,
+        "wires": [
+            [
+                "8b25780e.c17938"
+            ]
+        ]
+    },
+    {
+        "id": "ce32cede.17b558",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 300,
+        "wires": [
+            [
+                "719a6d60.95201c"
+            ]
+        ]
+    },
+    {
+        "id": "8b25780e.c17938",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "get OneShot",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/OneShot\";\n\noperation = \"\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"GET\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 300,
+        "wires": [
+            [
+                "ce32cede.17b558"
+            ]
+        ]
+    },
+    {
+        "id": "719a6d60.95201c",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 300,
+        "wires": [
+            [
+                "e52f028c.920c6"
+            ]
+        ]
+    },
+    {
+        "id": "e52f028c.920c6",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6739b06f.7036a",
+        "type": "comment",
+        "z": "f2b5b222.75f0f",
+        "name": "Read Data from Niagara",
+        "info": "",
+        "x": 300,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b7b3e2a5.97c32",
+        "type": "comment",
+        "z": "f2b5b222.75f0f",
+        "name": "Write Data to Niagara",
+        "info": "",
+        "x": 280,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "5df3353e.e50ba4",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 460,
+        "wires": [
+            [
+                "d8729074.b5db4"
+            ]
+        ]
+    },
+    {
+        "id": "97b235ef.86c6d",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 460,
+        "wires": [
+            [
+                "37e13f7b.5b42a"
+            ]
+        ]
+    },
+    {
+        "id": "d8729074.b5db4",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "post Numeric",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/NumericWritable\";\n\noperation = \"/set\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"POST\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\n//value to post\nmsg.payload = '<real val=\"12345\"/>';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 460,
+        "wires": [
+            [
+                "97b235ef.86c6d"
+            ]
+        ]
+    },
+    {
+        "id": "37e13f7b.5b42a",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "9648b3de.b1f8c8"
+            ]
+        ]
+    },
+    {
+        "id": "9648b3de.b1f8c8",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "2999b3d5.7697ec",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 500,
+        "wires": [
+            [
+                "658f6075.ba5bd8"
+            ]
+        ]
+    },
+    {
+        "id": "78ed9667.e6ef28",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "b1e9e6c6.6a8248"
+            ]
+        ]
+    },
+    {
+        "id": "658f6075.ba5bd8",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "post Boolean",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/BooleanWritable\";\n\noperation = \"/set\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"POST\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\n//value to post\nmsg.payload = '<bool val=\"true\"/>';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 500,
+        "wires": [
+            [
+                "78ed9667.e6ef28"
+            ]
+        ]
+    },
+    {
+        "id": "b1e9e6c6.6a8248",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 500,
+        "wires": [
+            [
+                "742ac880.cef71"
+            ]
+        ]
+    },
+    {
+        "id": "742ac880.cef71",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "27550f92.5d336",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 540,
+        "wires": [
+            [
+                "54a91a87.f2b9dc"
+            ]
+        ]
+    },
+    {
+        "id": "1402c155.17731f",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 540,
+        "wires": [
+            [
+                "b63381e.f9a258"
+            ]
+        ]
+    },
+    {
+        "id": "54a91a87.f2b9dc",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "post Enum",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/EnumWritable\";\n\noperation = \"/set\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"POST\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\n//value to post\nmsg.payload = '<enum val=\"On\"/>';\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 540,
+        "wires": [
+            [
+                "1402c155.17731f"
+            ]
+        ]
+    },
+    {
+        "id": "b63381e.f9a258",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 540,
+        "wires": [
+            [
+                "6c614a13.50ba6c"
+            ]
+        ]
+    },
+    {
+        "id": "6c614a13.50ba6c",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "92a1b958.13d13",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 580,
+        "wires": [
+            [
+                "5f3fd51b.1d164c"
+            ]
+        ]
+    },
+    {
+        "id": "df987c55.663e2",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 580,
+        "wires": [
+            [
+                "127cc640.84591a"
+            ]
+        ]
+    },
+    {
+        "id": "5f3fd51b.1d164c",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "post String",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/StringWritable\";\n\noperation = \"/set\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"POST\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\n//value to post\nmsg.payload = '<str val=\"Almond Joys Got Nuts\"/>';\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 580,
+        "wires": [
+            [
+                "df987c55.663e2"
+            ]
+        ]
+    },
+    {
+        "id": "127cc640.84591a",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 580,
+        "wires": [
+            [
+                "64e50737.33e0b8"
+            ]
+        ]
+    },
+    {
+        "id": "64e50737.33e0b8",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "e336428c.59bd78",
+        "type": "inject",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 620,
+        "wires": [
+            [
+                "ae27fda9.8395e8"
+            ]
+        ]
+    },
+    {
+        "id": "4748c09e.7775a8",
+        "type": "http request",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 440,
+        "y": 620,
+        "wires": [
+            [
+                "fda7d230.3f6de"
+            ]
+        ]
+    },
+    {
+        "id": "ae27fda9.8395e8",
+        "type": "function",
+        "z": "f2b5b222.75f0f",
+        "name": "post OneShot",
+        "func": "\n//what data do I want to pull out of the niagara station\nordSlot = \"/App/OneShot\";\n\noperation = \"/fire\";\n\n//create the message for the get request\n\nmsg = {\n    \"method\": \"POST\",\n    \"url\": \"https://\"+flow.get(\"IP\")+\"/obix/config\"+ordSlot+operation,\n    \"headers\": {\n        \"Authorization\": \"Basic \" + flow.get(\"authHash\"),\n        \"Accept\": \"*/*\"\n    }\n};\n\n//ignore cert expired error\nmsg.rejectUnauthorized = false;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "4748c09e.7775a8"
+            ]
+        ]
+    },
+    {
+        "id": "fda7d230.3f6de",
+        "type": "xml",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 590,
+        "y": 620,
+        "wires": [
+            [
+                "623a1369.22930c"
+            ]
+        ]
+    },
+    {
+        "id": "623a1369.22930c",
+        "type": "debug",
+        "z": "f2b5b222.75f0f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 620,
+        "wires": []
+    }
+]
